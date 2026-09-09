@@ -1,256 +1,367 @@
 
-document.addEventListener('DOMContentLoaded', () => {
+
+(function () {
   'use strict';
 
-
-  const styleSheet = document.createElement('style');
-  styleSheet.textContent = `
-    .nav-links {
-      display: flex;
-      gap: 16px;
-      margin-left: auto;
-      list-style: none;
-      padding: 0;
-      margin-top: 0;
-      margin-bottom: 0;
-    }
-    .nav-links a {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      text-decoration: none;
-      color: var(--ink-soft);
-      padding: 4px 8px;
-      border-radius: 4px;
-      transition: all 0.2s ease;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      color: var(--rust);
-      background: rgba(156, 62, 40, 0.08);
-    }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-    }
-    .interactive-organelle {
-      cursor: pointer;
-      transition: filter 0.2s ease, transform 0.2s ease;
-    }
-    .interactive-organelle:hover {
-      filter: drop-shadow(0 0 6px var(--rust));
-      opacity: 0.85;
-    }
-    .highlight-row {
-      animation: rowPulse 2s ease-out;
-    }
-    @keyframes rowPulse {
-      0% { background-color: #f7dcd5 !important; }
-      50% { background-color: #f7dcd5 !important; }
-      100% { background-color: transparent; }
-    }
-    .search-container {
-      margin-bottom: 24px;
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-    .search-input {
-      width: 100%;
-      max-width: 400px;
-      padding: 10px 16px;
-      font-family: var(--font-body);
-      font-size: 0.9rem;
-      border: 1px solid var(--line-strong);
-      border-radius: 6px;
-      background: var(--white);
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    }
-    .search-input:focus {
-      border-color: var(--rust);
-      box-shadow: 0 0 0 3px rgba(156, 62, 40, 0.15);
-    }
-    .back-to-top {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--green-deep);
-      color: var(--paper);
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease;
-      z-index: 100;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-    .back-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    .back-to-top:hover {
-      transform: translateY(-3px);
-      background: var(--rust);
-    }
-  `;
-  document.head.appendChild(styleSheet);
-
-
-  const header = document.getElementById('siteHeader');
-  const headerWrap = header?.querySelector('.wrap');
-
-  if (headerWrap) {
-    const nav = document.createElement('ul');
-    nav.className = 'nav-links';
-    nav.innerHTML = `
-      <li><a href="#organelles">01 Organelles</a></li>
-      <li><a href="#comparison">02 Comparison</a></li>
-      <li><a href="#classification">03 Classification</a></li>
-      <li><a href="#specialized">04 Specialized</a></li>
-      <li><a href="#modifications">05 Specialization</a></li>
-    `;
-    headerWrap.appendChild(nav);
-  }
-
-  function handleScroll() {
-    if (window.scrollY > 12) {
-      header?.classList.add('is-scrolled');
-    } else {
-      header?.classList.remove('is-scrolled');
-    }
-  }
-  window.addEventListener('scroll', handleScroll, { passive: true });
-
-
-  const sections = document.querySelectorAll('section[id]');
-  const navAnchors = document.querySelectorAll('.nav-links a');
-
-  const observerOptions = {
-    root: null,
-    rootMargin: '-20% 0px -60% 0px',
-    threshold: 0
+  
+  const CONFIG = {
+    themeKey: 'genbio_theme_pref',
+    headerOffset: 80, // Accounts for sticky header height
   };
 
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const activeId = entry.target.getAttribute('id');
-        navAnchors.forEach(a => {
-          if (a.getAttribute('href') === `#${activeId}`) {
-            a.classList.add('active');
-          } else {
-            a.classList.remove('active');
-          }
+  const DOM = {
+    root: document.documentElement,
+    header: document.getElementById('siteHeader'),
+    nav: document.getElementById('primaryNav'),
+    navToggle: document.getElementById('navToggle'),
+    navLinks: document.querySelectorAll('.nav-link'),
+    themeToggle: document.getElementById('themeToggle'),
+    metaTheme: document.querySelector('meta[name="theme-color"]'),
+    progressBar: document.querySelector('#readingProgress span'),
+    backToTopBtn: document.getElementById('backToTop'),
+    backToTopFooter: document.getElementById('backToTopFooter'),
+    printBtn: document.getElementById('printBtn'),
+    footerYear: document.getElementById('footerYear'),
+    svgCell: document.getElementById('interactiveCellSvg'),
+    organelles: document.querySelectorAll('.svg-organelle'),
+    labelGroups: document.querySelectorAll('.label-group'),
+    filterGroups: document.querySelectorAll('.filter-group'),
+    reveals: document.querySelectorAll('.reveal'),
+    partSections: document.querySelectorAll('.part-section, .hero')
+  };
+
+  // -- THEME---
+  const ThemeManager = {
+    init() {
+      const savedTheme = this.getStoredTheme();
+      const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const initialTheme = savedTheme || (systemDark ? 'dark' : 'light');
+      
+      this.applyTheme(initialTheme, false);
+
+      if (DOM.themeToggle) {
+        DOM.themeToggle.addEventListener('click', () => {
+          const current = DOM.root.getAttribute('data-theme');
+          const next = current === 'dark' ? 'light' : 'dark';
+          this.applyTheme(next, true);
         });
       }
-    });
-  }, observerOptions);
 
-  sections.forEach(sec => sectionObserver.observe(sec));
+    
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!this.getStoredTheme()) {
+          this.applyTheme(e.matches ? 'dark' : 'light', false);
+        }
+      });
+    },
 
+    getStoredTheme() {
+      try { return localStorage.getItem(CONFIG.themeKey); } catch (e) { return null; }
+    },
 
-  const svg = document.querySelector('.hero-figure svg');
-  if (svg) {
-    const organelleMap = [
-      { selector: '.organelle-nucleus, text:nth-of-type(1)', name: 'Nucleus' },
-      { selector: '.organelle-mito, text:nth-of-type(2)', name: 'Mitochondria' },
-      { selector: '.organelle-er, text:nth-of-type(3)', name: 'Endoplasmic reticulum' },
-      { selector: '.organelle-golgi, text:nth-of-type(4)', name: 'Golgi apparatus' },
-      { selector: '.organelle-lyso, text:nth-of-type(5)', name: 'Lysosomes' },
-      { selector: '.cell-outline, text:nth-of-type(6)', name: 'Cell membrane' }
-    ];
+    applyTheme(theme, save = false) {
+      DOM.root.setAttribute('data-theme', theme);
+      if (DOM.themeToggle) {
+        DOM.themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      }
+      if (DOM.metaTheme) {
+        DOM.metaTheme.setAttribute('content', theme === 'dark' ? '#0F172A' : '#1B3B22');
+      }
+      if (save) {
+        try { localStorage.setItem(CONFIG.themeKey, theme); } catch (e) {}
+      }
+    }
+  };
 
-    organelleMap.forEach(item => {
-      const elements = svg.querySelectorAll(item.selector);
-      elements.forEach(el => {
-        el.classList.add('interactive-organelle');
-        el.addEventListener('click', () => {
-          jumpToOrganelleRow(item.name);
+  //-- NAVIGATION ---
+  const NavEngine = {
+    init() {
+      if (!DOM.navToggle || !DOM.nav) return;
+
+      DOM.navToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggleNav();
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (DOM.nav.classList.contains('is-open') && !DOM.nav.contains(e.target) && !DOM.navToggle.contains(e.target)) {
+          this.closeNav();
+        }
+      });
+
+      // Close menu on Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && DOM.nav.classList.contains('is-open')) {
+          this.closeNav();
+          DOM.navToggle.focus();
+        }
+      });
+
+      
+      DOM.navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          this.closeNav();
         });
       });
-    });
-  }
+    },
 
-  function jumpToOrganelleRow(organelleName) {
-    const rows = document.querySelectorAll('#organelles table tbody tr');
-    let targetRow = null;
-
-    rows.forEach(row => {
-      const firstCell = row.querySelector('td:first-child');
-      if (firstCell && firstCell.textContent.toLowerCase().includes(organelleName.toLowerCase())) {
-        targetRow = row;
+    toggleNav() {
+      const isOpen = DOM.nav.classList.toggle('is-open');
+      DOM.navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      if (isOpen) {
+        document.body.style.overflow = window.innerWidth <= 768 ? 'hidden' : '';
+      } else {
+        document.body.style.overflow = '';
       }
-    });
+    },
 
-    if (targetRow) {
-      targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      targetRow.classList.remove('highlight-row');
-      // Trigger reflow to restart CSS animation
-      void targetRow.offsetWidth;
-      targetRow.classList.add('highlight-row');
+    closeNav() {
+      DOM.nav.classList.remove('is-open');
+      DOM.navToggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
     }
-  }
+  };
 
 
-  const organellesSection = document.getElementById('organelles');
-  if (organellesSection) {
-    const wrap = organellesSection.querySelector('.wrap');
-    const partHead = organellesSection.querySelector('.part-head');
+  const ScrollEngine = {
+    ticking: false,
 
-    const searchContainer = document.createElement('div');
-    searchContainer.className = 'search-container';
-    searchContainer.innerHTML = `
-      <input type="text" class="search-input" placeholder="Search structures or functions (e.g., ATP, DNA, wall)..." aria-label="Search cell structures">
-    `;
+    init() {
+      window.addEventListener('scroll', () => {
+        if (!this.ticking) {
+          window.requestAnimationFrame(() => {
+            this.onScroll();
+            this.ticking = false;
+          });
+          this.ticking = true;
+        }
+      }, { passive: true });
 
-    if (partHead && partHead.nextSibling) {
-      wrap.insertBefore(searchContainer, partHead.nextSibling);
+    
+      [DOM.backToTopBtn, DOM.backToTopFooter].forEach(btn => {
+        if (btn) {
+          btn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+      });
+
+      this.initScrollspy();
+      this.initSmoothScrollAnchors();
+    },
+
+    onScroll() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollHeight > 0 ? Math.min((scrollTop / scrollHeight) * 100, 100) : 0;
+
+      
+      if (DOM.progressBar) {
+        DOM.progressBar.style.width = `${progress}%`;
+      }
+
+      
+      if (DOM.header) {
+        DOM.header.classList.toggle('is-scrolled', scrollTop > 20);
+      }
+
+      
+      if (DOM.backToTopBtn) {
+        DOM.backToTopBtn.classList.toggle('is-visible', scrollTop > 350);
+      }
+    },
+
+    initScrollspy() {
+      if (!('IntersectionObserver' in window)) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            if (!id) return;
+            DOM.navLinks.forEach(link => {
+              const href = link.getAttribute('href').replace('#', '');
+              if (href === id) {
+                link.classList.add('active');
+                link.setAttribute('aria-current', 'location');
+              } else {
+                link.classList.remove('active');
+                link.removeAttribute('aria-current');
+              }
+            });
+          }
+        });
+      }, {
+        rootMargin: '-20% 0px -70% 0px'
+      });
+
+      DOM.partSections.forEach(section => observer.observe(section));
+    },
+
+    initSmoothScrollAnchors() {
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const targetId = this.getAttribute('href');
+          if (targetId === '#' || targetId === '#top') {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+          }
+
+          const targetEl = document.querySelector(targetId);
+          if (targetEl) {
+            e.preventDefault();
+            const elementPosition = targetEl.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - CONFIG.headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
     }
+  };
 
-    const searchInput = searchContainer.querySelector('.search-input');
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase().trim();
-      const allTables = organellesSection.querySelectorAll('table');
+  
+  const DiagramEngine = {
+    init() {
+      if (!DOM.svgCell) return;
 
-      allTables.forEach(table => {
+      
+      DOM.labelGroups.forEach(label => {
+        const targetId = label.getAttribute('data-target');
+        
+        const highlight = (active) => {
+          const organelle = document.getElementById(`svg-${targetId}`);
+          if (organelle) organelle.classList.toggle('is-highlighted', active);
+          label.classList.toggle('is-active', active);
+        };
+
+        label.addEventListener('mouseenter', () => highlight(true));
+        label.addEventListener('mouseleave', () => highlight(false));
+
+        // Touch device handling
+        label.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          const isHighlighted = label.classList.contains('is-active');
+          this.clearAllHighlights();
+          if (!isHighlighted) highlight(true);
+        }, { passive: false });
+      });
+
+      
+      DOM.organelles.forEach(organelle => {
+        const targetId = organelle.getAttribute('data-target');
+        
+        const highlight = (active) => {
+          organelle.classList.toggle('is-highlighted', active);
+          const label = document.querySelector(`.label-group[data-target="${targetId}"]`);
+          if (label) label.classList.toggle('is-active', active);
+        };
+
+        organelle.addEventListener('mouseenter', () => highlight(true));
+        organelle.addEventListener('mouseleave', () => highlight(false));
+
+        organelle.addEventListener('click', () => {
+          const isHighlighted = organelle.classList.contains('is-highlighted');
+          this.clearAllHighlights();
+          if (!isHighlighted) highlight(true);
+        });
+      });
+    },
+
+    clearAllHighlights() {
+      DOM.organelles.forEach(el => el.classList.remove('is-highlighted'));
+      DOM.labelGroups.forEach(el => el.classList.remove('is-active', 'is-highlighted'));
+    }
+  };
+
+  
+  const TableEngine = {
+    init() {
+      DOM.filterGroups.forEach(group => {
+        const tableId = group.getAttribute('data-table');
+        const table = document.getElementById(tableId);
+        if (!table) return;
+
+        const buttons = group.querySelectorAll('.filter-pill');
         const rows = table.querySelectorAll('tbody tr');
-        rows.forEach(row => {
-          const text = row.textContent.toLowerCase();
-          if (text.includes(query)) {
-            row.style.display = '';
-          } else {
-            row.style.display = 'none';
-          }
+
+        buttons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            // Active state toggle
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.getAttribute('data-filter');
+
+            rows.forEach(row => {
+              const category = row.getAttribute('data-category');
+              const isMatch = filter === 'all' || category === filter || (category && category.includes(filter));
+
+              if (isMatch) {
+                row.style.display = '';
+                row.style.animation = 'fadeInRow 0.3s ease forwards';
+              } else {
+                row.style.display = 'none';
+              }
+            });
+          });
         });
       });
-    });
-  }
-
-
-  const backToTopBtn = document.createElement('button');
-  backToTopBtn.className = 'back-to-top';
-  backToTopBtn.setAttribute('aria-label', 'Back to top');
-  backToTopBtn.innerHTML = `
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="18 15 12 9 6 15"></polyline>
-    </svg>
-  `;
-  document.body.appendChild(backToTopBtn);
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) {
-      backToTopBtn.classList.add('visible');
-    } else {
-      backToTopBtn.classList.remove('visible');
     }
-  }, { passive: true });
+  };
 
-  backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  const RevealEngine = {
+    init() {
+      if (!('IntersectionObserver' in window)) {
+        DOM.reveals.forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      DOM.reveals.forEach(el => observer.observe(el));
+    }
+  };
+
+  
+  const Utils = {
+    init() {
+      // PDF Print Trigger
+      if (DOM.printBtn) {
+        DOM.printBtn.addEventListener('click', () => window.print());
+      }
+
+    
+      if (DOM.footerYear) {
+        DOM.footerYear.textContent = new Date().getFullYear();
+      }
+    }
+  };
+
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    ThemeManager.init();
+    NavEngine.init();
+    ScrollEngine.init();
+    DiagramEngine.init();
+    TableEngine.init();
+    RevealEngine.init();
+    Utils.init();
   });
-});
+})();
