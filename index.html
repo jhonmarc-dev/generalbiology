@@ -1,10 +1,15 @@
-<!Doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gen Bio — The Cell: Structure, Classification and Specialization</title>
-<meta name="description" content="A reference on cell structure, organelle function, prokaryotic and eukaryotic classification, and cell specialization, prepared for General Biology, STEM 12-Y1-P3.">
+<meta name="description" content="A reference on cell structure, organelle function, prokaryotic and eukaryotic classification, and cell specialization, prepared for General Biology.">
+<meta name="theme-color" content="#EFF1EC">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gen Bio — The Cell: Structure, Classification and Specialization">
+<meta property="og:description" content="Organelle structure and function, prokaryotic vs eukaryotic comparison, cell classification, specialized cells and cell modifications.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,38 +18,68 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="progress" id="readingProgress" role="presentation"><span></span></div>
+
 <header class="site-header" id="siteHeader">
-  <div class="wrap">
+  <div class="wrap header-inner">
+    
+    <div class="header-left">
+      <button class="icon-btn nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">
+        <span></span><span></span><span></span>
+      </button>
+      
+      <nav class="nav" id="primaryNav" aria-label="Section navigation">
+        <a href="#organelles"><span class="nav-num">01</span> Organelles</a>
+        <a href="#comparison"><span class="nav-num">02</span> Comparison</a>
+        <a href="#classification"><span class="nav-num">03</span> Classification</a>
+        <a href="#specialized"><span class="nav-num">04</span> Specialized</a>
+        <a href="#modifications"><span class="nav-num">05</span> Modifications</a>
+      </nav>
+    </div>
+
     <a href="#top" class="brand">
-      <span class="brand-mark">General Biology</span>
-      <span class="brand-tag">STEM 12&#8209;Y1&#8209;P3</span>
+      <span class="brand-icon" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="13" cy="14" r="5" fill="currentColor"/><circle cx="23" cy="22" r="2.2" fill="currentColor" opacity=".6"/></svg>
+      </span>
+      <span class="brand-text">
+        <span class="brand-mark">General Biology</span>
+        <span class="brand-tag">STEM 12&#8209;Y1&#8209;P3</span>
+      </span>
     </a>
+
+    <div class="header-tools">
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch colour theme" aria-pressed="false">
+        <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.6"/><g stroke-linecap="round"><path d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"/></g></svg>
+        <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8.2 8.2 0 1 1 9.8 4a6.6 6.6 0 0 0 10.2 10.2Z"/></svg>
+      </button>
+    </div>
+
   </div>
 </header>
 
-<main id="top">
+<main id="main">
+<div id="top"></div>
 
   <section class="hero">
-    <div class="wrap">
+    <div class="wrap hero-grid">
       <div class="hero-copy">
         <p class="hero-eyebrow">General Biology — Unit Reference</p>
         <h1>The cell is the smallest unit that still counts as alive.</h1>
         <p class="hero-lede">This reference walks through what is inside a cell, how prokaryotic and eukaryotic cells differ, how cells are classified, and how a general cell changes shape and structure to specialize for a single job.</p>
+
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#organelles">Start reading</a>
+          <button class="btn btn-ghost" type="button" id="printBtn">Save as PDF</button>
+        </div>
+
         <div class="hero-meta">
-          <div>
-            <span>Subject</span>
-            <strong>General Biology</strong>
-          </div>
-          <div>
-            <span>Section</span>
-            <strong>STEM 12&#8209;Y1&#8209;P3</strong>
-          </div>
-          <div>
-            <span>Topics covered</span>
-            <strong>4</strong>
-          </div>
+          <div><span>Subject</span><strong>General Biology</strong></div>
+          <div><span>Section</span><strong>STEM 12&#8209;Y1&#8209;P3</strong></div>
+          <div><span>Parts</span><strong data-count="5">5</strong></div>
         </div>
       </div>
+
       <figure class="hero-figure">
         <div class="hero-figure-glow" aria-hidden="true">
           <span class="glow-blob glow-blob--a"></span>
@@ -52,68 +87,47 @@
         </div>
         <svg viewBox="0 0 560 460" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cellTitle">
           <title id="cellTitle">Diagram of a generalized eukaryotic animal cell with major organelles labeled</title>
-
-          <ellipse class="cell-outline" cx="280" cy="230" rx="220" ry="170" fill="none" stroke="#14171A" stroke-width="2"/>
-          <ellipse class="cell-outline-pulse" cx="280" cy="230" rx="220" ry="170" fill="none" stroke="#2F5233" stroke-width="1"/>
-
+          <ellipse class="cell-outline" cx="280" cy="230" rx="220" ry="170" fill="none" stroke="currentColor" stroke-width="2"/>
+          <ellipse class="cell-outline-pulse" cx="280" cy="230" rx="220" ry="170" fill="none" stroke="var(--green)" stroke-width="1"/>
           <g class="cell-detail">
-            <!-- nucleus -->
             <g class="organelle-nucleus">
-              <circle cx="230" cy="200" r="66" fill="none" stroke="#14171A" stroke-width="1.6"/>
-              <circle class="nucleolus" cx="230" cy="200" r="16" fill="#9C3E28"/>
+              <circle cx="230" cy="200" r="66" fill="none" stroke="currentColor" stroke-width="1.6"/>
+              <circle class="nucleolus" cx="230" cy="200" r="16" fill="var(--rust)"/>
             </g>
-
-            <!-- mitochondria -->
             <g class="organelle-mito organelle-mito--a">
-              <ellipse cx="370" cy="150" rx="34" ry="18" fill="none" stroke="#14171A" stroke-width="1.4" transform="rotate(-18 370 150)"/>
-              <path d="M356 150 Q370 138 384 150 M356 150 Q370 162 384 150" stroke="#14171A" stroke-width="1" fill="none" transform="rotate(-18 370 150)"/>
+              <ellipse cx="370" cy="150" rx="34" ry="18" fill="none" stroke="currentColor" stroke-width="1.4" transform="rotate(-18 370 150)"/>
+              <path d="M356 150 Q370 138 384 150 M356 150 Q370 162 384 150" stroke="currentColor" stroke-width="1" fill="none" transform="rotate(-18 370 150)"/>
             </g>
-
             <g class="organelle-mito organelle-mito--b">
-              <ellipse cx="380" cy="290" rx="30" ry="16" fill="none" stroke="#14171A" stroke-width="1.4" transform="rotate(20 380 290)"/>
+              <ellipse cx="380" cy="290" rx="30" ry="16" fill="none" stroke="currentColor" stroke-width="1.4" transform="rotate(20 380 290)"/>
             </g>
-
-            <!-- ER -->
-            <path class="organelle-er" d="M150 260 Q175 240 150 220 Q125 200 150 180 Q175 160 150 140" fill="none" stroke="#14171A" stroke-width="1.3"/>
-            <circle cx="150" cy="260" r="2" fill="#14171A"/>
-            <circle cx="150" cy="220" r="2" fill="#14171A"/>
-            <circle cx="150" cy="180" r="2" fill="#14171A"/>
-
-            <!-- golgi -->
+            <path class="organelle-er" d="M150 260 Q175 240 150 220 Q125 200 150 180 Q175 160 150 140" fill="none" stroke="currentColor" stroke-width="1.3"/>
+            <circle cx="150" cy="260" r="2" fill="currentColor"/>
+            <circle cx="150" cy="220" r="2" fill="currentColor"/>
+            <circle cx="150" cy="180" r="2" fill="currentColor"/>
             <g class="organelle-golgi">
-              <path d="M330 330 q40 -10 78 0" stroke="#14171A" stroke-width="1.3" fill="none"/>
-              <path d="M336 342 q36 -10 68 0" stroke="#14171A" stroke-width="1.3" fill="none"/>
-              <path d="M342 354 q30 -9 58 0" stroke="#14171A" stroke-width="1.3" fill="none"/>
+              <path d="M330 330 q40 -10 78 0" stroke="currentColor" stroke-width="1.3" fill="none"/>
+              <path d="M336 342 q36 -10 68 0" stroke="currentColor" stroke-width="1.3" fill="none"/>
+              <path d="M342 354 q30 -9 58 0" stroke="currentColor" stroke-width="1.3" fill="none"/>
             </g>
-
-            <!-- lysosome -->
-            <circle class="organelle-lyso" cx="180" cy="330" r="12" fill="none" stroke="#14171A" stroke-width="1.4"/>
-
-            <!-- ribosome dots -->
-            <circle class="ribosome ribosome-1" cx="200" cy="120" r="2.4" fill="#14171A"/>
-            <circle class="ribosome ribosome-2" cx="215" cy="110" r="2.4" fill="#14171A"/>
-            <circle class="ribosome ribosome-3" cx="410" cy="220" r="2.4" fill="#14171A"/>
-            <circle class="ribosome ribosome-4" cx="420" cy="235" r="2.4" fill="#14171A"/>
-            <circle class="ribosome ribosome-5" cx="120" cy="290" r="2.4" fill="#14171A"/>
-
-            <!-- leader lines + labels -->
-            <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#4E534B">
-              <line x1="230" y1="134" x2="230" y2="96" stroke="#9C3E28" stroke-width="1"/>
+            <circle class="organelle-lyso" cx="180" cy="330" r="12" fill="none" stroke="currentColor" stroke-width="1.4"/>
+            <circle class="ribosome ribosome-1" cx="200" cy="120" r="2.4" fill="currentColor"/>
+            <circle class="ribosome ribosome-2" cx="215" cy="110" r="2.4" fill="currentColor"/>
+            <circle class="ribosome ribosome-3" cx="410" cy="220" r="2.4" fill="currentColor"/>
+            <circle class="ribosome ribosome-4" cx="420" cy="235" r="2.4" fill="currentColor"/>
+            <circle class="ribosome ribosome-5" cx="120" cy="290" r="2.4" fill="currentColor"/>
+            <g class="cell-labels" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--ink-soft)">
+              <line x1="230" y1="134" x2="230" y2="96" stroke="var(--rust)" stroke-width="1"/>
               <text x="234" y="92">Nucleus</text>
-
-              <line x1="392" y1="145" x2="452" y2="130" stroke="#9C3E28" stroke-width="1"/>
+              <line x1="392" y1="145" x2="452" y2="130" stroke="var(--rust)" stroke-width="1"/>
               <text x="404" y="122">Mitochondria</text>
-
-              <line x1="150" y1="140" x2="90" y2="110" stroke="#9C3E28" stroke-width="1"/>
+              <line x1="150" y1="140" x2="90" y2="110" stroke="var(--rust)" stroke-width="1"/>
               <text x="20" y="106">Endoplasmic reticulum</text>
-
-              <line x1="392" y1="345" x2="452" y2="368" stroke="#9C3E28" stroke-width="1"/>
+              <line x1="392" y1="345" x2="452" y2="368" stroke="var(--rust)" stroke-width="1"/>
               <text x="410" y="382">Golgi apparatus</text>
-
-              <line x1="168" y1="335" x2="106" y2="360" stroke="#9C3E28" stroke-width="1"/>
+              <line x1="168" y1="335" x2="106" y2="360" stroke="var(--rust)" stroke-width="1"/>
               <text x="34" y="374">Lysosome</text>
-
-              <line x1="72" y1="230" x2="58" y2="230" stroke="#9C3E28" stroke-width="1"/>
+              <line x1="72" y1="230" x2="58" y2="230" stroke="var(--rust)" stroke-width="1"/>
               <text x="20" y="248">Cell membrane</text>
             </g>
           </g>
@@ -123,10 +137,9 @@
     </div>
   </section>
 
-  <!-- PART 01 — Eukaryotic organelles -->
   <section class="part-section" id="organelles">
     <div class="wrap">
-      <div class="part-head">
+      <div class="part-head reveal">
         <div>
           <span class="part-number">Part 01 — Organelles</span>
           <h2>Structure and function of major subcellular organelles</h2>
@@ -135,90 +148,82 @@
       </div>
 
       <p class="group-label">Eukaryotic cells</p>
-      <div class="table-scroll">
+      <div class="table-scroll reveal">
         <table>
-          <thead>
-            <tr><th>Structure</th><th>Description</th><th>Function</th></tr>
-          </thead>
+          <thead><tr><th>Structure</th><th>Description</th><th>Function</th></tr></thead>
           <tbody>
-            <tr><td>Cell membrane</td><td class="col-desc">Thin and flexible layer around the cell.</td><td class="col-func">Controls what enters and leaves the cell.</td></tr>
-            <tr><td>Cytoplasm</td><td class="col-desc">Jelly-like substance inside the cell.</td><td class="col-func">Holds organelles and is where many chemical reactions occur.</td></tr>
-            <tr><td>Nucleus</td><td class="col-desc">Membrane-bound structure that contains DNA.</td><td class="col-func">Controls cell activities and stores genetic information.</td></tr>
-            <tr><td>Nucleolus</td><td class="col-desc">The dense region inside the nucleus.</td><td class="col-func">Responsible for the production of ribosomal components.</td></tr>
-            <tr><td>Ribosomes</td><td class="col-desc">Small structures composed of RNA and proteins.</td><td class="col-func">Responsible for protein production.</td></tr>
-            <tr><td>Mitochondria</td><td class="col-desc">Bean-shaped organelles with folded inner membranes.</td><td class="col-func">Produces energy in the form of adenosine triphosphate (ATP) for the cell.</td></tr>
-            <tr><td>Endoplasmic reticulum (ER)</td><td class="col-desc">A network of membranes.</td><td class="col-func">Makes and transports proteins and lipids.</td></tr>
-            <tr><td>Golgi apparatus</td><td class="col-desc">Stack of flattened membrane sacs.</td><td class="col-func">Modifies, sorts and packages proteins.</td></tr>
-            <tr><td>Lysosomes</td><td class="col-desc">Small membrane-bound sacs containing enzymes.</td><td class="col-func">Breaks down waste and damaged cell parts.</td></tr>
-            <tr><td>Vacuoles</td><td class="col-desc">Membrane-bound storage sacs.</td><td class="col-func">Stores water, nutrients and waste.</td></tr>
-            <tr><td>Cytoskeleton</td><td class="col-desc">Network of protein fibers.</td><td class="col-func">Maintains cell shape and helps movement.</td></tr>
-            <tr><td>Chloroplast</td><td class="col-desc">An organelle with a distinctly green pigment containing chlorophyll.</td><td class="col-func">Performs photosynthesis.</td></tr>
-            <tr><td>Cell wall</td><td class="col-desc">Rigid outer layer outside the membrane.</td><td class="col-func">Supports and protects the cell.</td></tr>
+            <tr><td data-label="Structure">Cell membrane</td><td data-label="Description" class="col-desc">Thin and flexible layer around the cell.</td><td data-label="Function" class="col-func">Controls what enters and leaves the cell.</td></tr>
+            <tr><td data-label="Structure">Cytoplasm</td><td data-label="Description" class="col-desc">Jelly-like substance inside the cell.</td><td data-label="Function" class="col-func">Holds organelles and is where many chemical reactions occur.</td></tr>
+            <tr><td data-label="Structure">Nucleus</td><td data-label="Description" class="col-desc">Membrane-bound structure that contains DNA.</td><td data-label="Function" class="col-func">Controls cell activities and stores genetic information.</td></tr>
+            <tr><td data-label="Structure">Nucleolus</td><td data-label="Description" class="col-desc">The dense region inside the nucleus.</td><td data-label="Function" class="col-func">Responsible for the production of ribosomal components.</td></tr>
+            <tr><td data-label="Structure">Ribosomes</td><td data-label="Description" class="col-desc">Small structures composed of RNA and proteins.</td><td data-label="Function" class="col-func">Responsible for protein production.</td></tr>
+            <tr><td data-label="Structure">Mitochondria</td><td data-label="Description" class="col-desc">Bean-shaped organelles with folded inner membranes.</td><td data-label="Function" class="col-func">Produces energy in the form of adenosine triphosphate (ATP) for the cell.</td></tr>
+            <tr><td data-label="Structure">Endoplasmic reticulum (ER)</td><td data-label="Description" class="col-desc">A network of membranes.</td><td data-label="Function" class="col-func">Makes and transports proteins and lipids.</td></tr>
+            <tr><td data-label="Structure">Golgi apparatus</td><td data-label="Description" class="col-desc">Stack of flattened membrane sacs.</td><td data-label="Function" class="col-func">Modifies, sorts and packages proteins.</td></tr>
+            <tr><td data-label="Structure">Lysosomes</td><td data-label="Description" class="col-desc">Small membrane-bound sacs containing enzymes.</td><td data-label="Function" class="col-func">Breaks down waste and damaged cell parts.</td></tr>
+            <tr><td data-label="Structure">Vacuoles</td><td data-label="Description" class="col-desc">Membrane-bound storage sacs.</td><td data-label="Function" class="col-func">Stores water, nutrients and waste.</td></tr>
+            <tr><td data-label="Structure">Cytoskeleton</td><td data-label="Description" class="col-desc">Network of protein fibers.</td><td data-label="Function" class="col-func">Maintains cell shape and helps movement.</td></tr>
+            <tr><td data-label="Structure">Chloroplast</td><td data-label="Description" class="col-desc">An organelle with a distinctly green pigment containing chlorophyll.</td><td data-label="Function" class="col-func">Performs photosynthesis.</td></tr>
+            <tr><td data-label="Structure">Cell wall</td><td data-label="Description" class="col-desc">Rigid outer layer outside the membrane.</td><td data-label="Function" class="col-func">Supports and protects the cell.</td></tr>
           </tbody>
         </table>
       </div>
 
       <p class="group-label">Prokaryotic cells</p>
-      <div class="table-scroll">
+      <div class="table-scroll reveal">
         <table>
-          <thead>
-            <tr><th>Structure</th><th>Description</th><th>Function</th></tr>
-          </thead>
+          <thead><tr><th>Structure</th><th>Description</th><th>Function</th></tr></thead>
           <tbody>
-            <tr><td>Plasma membrane</td><td class="col-desc">Thin phospholipid bilayer containing proteins.</td><td class="col-func">Controls what enters and leaves the cell; involved in respiration, energy production, and cell signaling.</td></tr>
-            <tr><td>Cell wall</td><td class="col-desc">Rigid layer outside the plasma membrane. In bacteria, mainly made of peptidoglycan.</td><td class="col-func">Maintains cell shape and protects the cell from bursting due to osmotic pressure.</td></tr>
-            <tr><td>Capsule / slime layer</td><td class="col-desc">Sticky outer layer made mainly of polysaccharides or proteins.</td><td class="col-func">Protects against drying and immune defenses; helps cells attach to surfaces and form biofilms.</td></tr>
-            <tr><td>Cytoplasm</td><td class="col-desc">Jelly-like interior containing water, enzymes, ions, nutrients, and cellular components.</td><td class="col-func">Site of many metabolic reactions.</td></tr>
-            <tr><td>Nucleoid</td><td class="col-desc">Region containing the cell's main circular DNA chromosome; not surrounded by a membrane.</td><td class="col-func">Stores genetic information and controls cellular activities.</td></tr>
-            <tr><td>Plasmids</td><td class="col-desc">Small, usually circular pieces of DNA separate from the main chromosome.</td><td class="col-func">Carry additional genes, such as antibiotic resistance genes; can be transferred between cells.</td></tr>
-            <tr><td>Ribosomes</td><td class="col-desc">Small complexes of rRNA and proteins; prokaryotic ribosomes are 70S.</td><td class="col-func">Manufacture proteins by translating mRNA.</td></tr>
-            <tr><td>Flagellum</td><td class="col-desc">Long, helical protein filament attached to a basal body and motor.</td><td class="col-func">Provides movement or locomotion.</td></tr>
-            <tr><td>Pili / fimbriae</td><td class="col-desc">Short protein filaments extending from the cell surface.</td><td class="col-func">Help cells attach to surfaces; some pili enable DNA transfer between bacteria.</td></tr>
-            <tr><td>Inclusion bodies</td><td class="col-desc">Storage granules or particles within the cytoplasm.</td><td class="col-func">Store nutrients and energy reserves such as glycogen, lipids, or phosphate.</td></tr>
+            <tr><td data-label="Structure">Plasma membrane</td><td data-label="Description" class="col-desc">Thin phospholipid bilayer containing proteins.</td><td data-label="Function" class="col-func">Controls what enters and leaves the cell; involved in respiration, energy production, and cell signaling.</td></tr>
+            <tr><td data-label="Structure">Cell wall</td><td data-label="Description" class="col-desc">Rigid layer outside the plasma membrane. In bacteria, mainly made of peptidoglycan.</td><td data-label="Function" class="col-func">Maintains cell shape and protects the cell from bursting due to osmotic pressure.</td></tr>
+            <tr><td data-label="Structure">Capsule / slime layer</td><td data-label="Description" class="col-desc">Sticky outer layer made mainly of polysaccharides or proteins.</td><td data-label="Function" class="col-func">Protects against drying and immune defenses; helps cells attach to surfaces and form biofilms.</td></tr>
+            <tr><td data-label="Structure">Cytoplasm</td><td data-label="Description" class="col-desc">Jelly-like interior containing water, enzymes, ions, nutrients, and cellular components.</td><td data-label="Function" class="col-func">Site of many metabolic reactions.</td></tr>
+            <tr><td data-label="Structure">Nucleoid</td><td data-label="Description" class="col-desc">Region containing the cell's main circular DNA chromosome; not surrounded by a membrane.</td><td data-label="Function" class="col-func">Stores genetic information and controls cellular activities.</td></tr>
+            <tr><td data-label="Structure">Plasmids</td><td data-label="Description" class="col-desc">Small, usually circular pieces of DNA separate from the main chromosome.</td><td data-label="Function" class="col-func">Carry additional genes, such as antibiotic resistance genes; can be transferred between cells.</td></tr>
+            <tr><td data-label="Structure">Ribosomes</td><td data-label="Description" class="col-desc">Small complexes of rRNA and proteins; prokaryotic ribosomes are 70S.</td><td data-label="Function" class="col-func">Manufacture proteins by translating mRNA.</td></tr>
+            <tr><td data-label="Structure">Flagellum</td><td data-label="Description" class="col-desc">Long, helical protein filament attached to a basal body and motor.</td><td data-label="Function" class="col-func">Provides movement or locomotion.</td></tr>
+            <tr><td data-label="Structure">Pili / fimbriae</td><td data-label="Description" class="col-desc">Short protein filaments extending from the cell surface.</td><td data-label="Function" class="col-func">Help cells attach to surfaces; some pili enable DNA transfer between bacteria.</td></tr>
+            <tr><td data-label="Structure">Inclusion bodies</td><td data-label="Description" class="col-desc">Storage granules or particles within the cytoplasm.</td><td data-label="Function" class="col-func">Store nutrients and energy reserves such as glycogen, lipids, or phosphate.</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- PART 02 — Comparison -->
   <section class="part-section" id="comparison">
     <div class="wrap">
-      <div class="part-head">
+      <div class="part-head reveal">
         <div>
           <span class="part-number">Part 02 — Comparison</span>
           <h2>Prokaryotic and eukaryotic cells, by distinguishing feature</h2>
         </div>
         <p class="part-prompt">Twelve features compared side by side.</p>
       </div>
-      <div class="table-scroll">
+      <div class="table-scroll reveal">
         <table>
-          <thead>
-            <tr><th>Feature</th><th>Prokaryotic cells</th><th>Eukaryotic cells</th></tr>
-          </thead>
+          <thead><tr><th>Feature</th><th>Prokaryotic cells</th><th>Eukaryotic cells</th></tr></thead>
           <tbody>
-            <tr><td>Definition</td><td class="col-desc">Single-cell organisms, no nucleus.</td><td class="col-func">Complex organisms, with nucleus.</td></tr>
-            <tr><td>Examples</td><td class="col-desc">Bacteria, archaea.</td><td class="col-func">Animals, plants, fungi.</td></tr>
-            <tr><td>Cell size</td><td class="col-desc">Smaller, typically 0.1&ndash;5.0 &micro;m in diameter.</td><td class="col-func">Larger, usually 10&ndash;100 &micro;m in diameter.</td></tr>
-            <tr><td>Mitochondria</td><td class="col-desc">Absent; energy produced in the cytoplasm.</td><td class="col-func">Present; powerhouse of the cell.</td></tr>
-            <tr><td>Cytoplasm</td><td class="col-desc">Present; site of metabolic processes.</td><td class="col-func">Present; holds organelles in place.</td></tr>
-            <tr><td>Endoplasmic reticulum</td><td class="col-desc">Absent; simpler protein synthesis.</td><td class="col-func">Present; crucial for protein synthesis.</td></tr>
-            <tr><td>Plasmids</td><td class="col-desc">Present; small, circular DNA.</td><td class="col-func">Rare, except in some fungi and plants.</td></tr>
-            <tr><td>Nucleus</td><td class="col-desc">Absent; DNA floats freely.</td><td class="col-func">Present; contains and protects.</td></tr>
-            <tr><td>DNA organelles</td><td class="col-desc">Few; simpler structures.</td><td class="col-func">Many specialized functions.</td></tr>
-            <tr><td>DNA structure</td><td class="col-desc">Single, circular chromosome.</td><td class="col-func">Multiple, linear chromosomes.</td></tr>
-            <tr><td>Ribosomes</td><td class="col-desc">70S; smaller.</td><td class="col-func">80S; larger.</td></tr>
-            <tr><td>Locomotion</td><td class="col-desc">Simple flagella; direct movement.</td><td class="col-func">Complex flagella or cilia for movement.</td></tr>
+            <tr><td data-label="Feature">Definition</td><td data-label="Prokaryotic" class="col-desc">Single-cell organisms, no nucleus.</td><td data-label="Eukaryotic" class="col-func">Complex organisms, with nucleus.</td></tr>
+            <tr><td data-label="Feature">Examples</td><td data-label="Prokaryotic" class="col-desc">Bacteria, archaea.</td><td data-label="Eukaryotic" class="col-func">Animals, plants, fungi.</td></tr>
+            <tr><td data-label="Feature">Cell size</td><td data-label="Prokaryotic" class="col-desc">Smaller, typically 0.1&ndash;5.0 &micro;m in diameter.</td><td data-label="Eukaryotic" class="col-func">Larger, usually 10&ndash;100 &micro;m in diameter.</td></tr>
+            <tr><td data-label="Feature">Mitochondria</td><td data-label="Prokaryotic" class="col-desc">Absent; energy produced in the cytoplasm.</td><td data-label="Eukaryotic" class="col-func">Present; powerhouse of the cell.</td></tr>
+            <tr><td data-label="Feature">Cytoplasm</td><td data-label="Prokaryotic" class="col-desc">Present; site of metabolic processes.</td><td data-label="Eukaryotic" class="col-func">Present; holds organelles in place.</td></tr>
+            <tr><td data-label="Feature">Endoplasmic reticulum</td><td data-label="Prokaryotic" class="col-desc">Absent; simpler protein synthesis.</td><td data-label="Eukaryotic" class="col-func">Present; crucial for protein synthesis.</td></tr>
+            <tr><td data-label="Feature">Plasmids</td><td data-label="Prokaryotic" class="col-desc">Present; small, circular DNA.</td><td data-label="Eukaryotic" class="col-func">Rare, except in some fungi and plants.</td></tr>
+            <tr><td data-label="Feature">Nucleus</td><td data-label="Prokaryotic" class="col-desc">Absent; DNA floats freely.</td><td data-label="Eukaryotic" class="col-func">Present; contains and protects.</td></tr>
+            <tr><td data-label="Feature">DNA organelles</td><td data-label="Prokaryotic" class="col-desc">Few; simpler structures.</td><td data-label="Eukaryotic" class="col-func">Many specialized functions.</td></tr>
+            <tr><td data-label="Feature">DNA structure</td><td data-label="Prokaryotic" class="col-desc">Single, circular chromosome.</td><td data-label="Eukaryotic" class="col-func">Multiple, linear chromosomes.</td></tr>
+            <tr><td data-label="Feature">Ribosomes</td><td data-label="Prokaryotic" class="col-desc">70S; smaller.</td><td data-label="Eukaryotic" class="col-func">80S; larger.</td></tr>
+            <tr><td data-label="Feature">Locomotion</td><td data-label="Prokaryotic" class="col-desc">Simple flagella; direct movement.</td><td data-label="Eukaryotic" class="col-func">Complex flagella or cilia for movement.</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- PART 03 — Classification -->
   <section class="part-section" id="classification">
     <div class="wrap">
-      <div class="part-head">
+      <div class="part-head reveal">
         <div>
           <span class="part-number">Part 03 — Classification</span>
           <h2>Cell types and the function of each structure</h2>
@@ -227,52 +232,51 @@
       </div>
 
       <p class="group-label">Prokaryotic cells</p>
-      <div class="table-scroll">
+      <div class="table-scroll reveal">
         <table>
           <thead><tr><th>Structure</th><th>Function</th></tr></thead>
           <tbody>
-            <tr><td>Nucleoid region</td><td class="col-func">Holds free-floating genetic material (DNA) without a nucleus.</td></tr>
-            <tr><td>Ribosomes</td><td class="col-func">Synthesize proteins for the cell.</td></tr>
-            <tr><td>Cell wall</td><td class="col-func">Provides rigid structural support and protection.</td></tr>
-            <tr><td>Flagella</td><td class="col-func">Enables movement through liquid environments.</td></tr>
+            <tr><td data-label="Structure">Nucleoid region</td><td data-label="Function" class="col-func">Holds free-floating genetic material (DNA) without a nucleus.</td></tr>
+            <tr><td data-label="Structure">Ribosomes</td><td data-label="Function" class="col-func">Synthesize proteins for the cell.</td></tr>
+            <tr><td data-label="Structure">Cell wall</td><td data-label="Function" class="col-func">Provides rigid structural support and protection.</td></tr>
+            <tr><td data-label="Structure">Flagella</td><td data-label="Function" class="col-func">Enables movement through liquid environments.</td></tr>
           </tbody>
         </table>
       </div>
 
       <p class="group-label">Eukaryotic animal cells</p>
-      <div class="table-scroll">
+      <div class="table-scroll reveal">
         <table>
           <thead><tr><th>Structure</th><th>Function</th></tr></thead>
           <tbody>
-            <tr><td>Nucleus</td><td class="col-func">Houses DNA and controls cell activities.</td></tr>
-            <tr><td>Mitochondria</td><td class="col-func">Generates energy (ATP) through cellular respiration.</td></tr>
-            <tr><td>Endoplasmic reticulum (ER)</td><td class="col-func">Synthesizes proteins (rough ER) and lipids (smooth ER).</td></tr>
-            <tr><td>Lysosomes</td><td class="col-func">Digest food and break down unwanted materials.</td></tr>
-            <tr><td>Centrioles</td><td class="col-func">Help in cell division.</td></tr>
-            <tr><td>Flagella</td><td class="col-func">Allows the cell to move.</td></tr>
+            <tr><td data-label="Structure">Nucleus</td><td data-label="Function" class="col-func">Houses DNA and controls cell activities.</td></tr>
+            <tr><td data-label="Structure">Mitochondria</td><td data-label="Function" class="col-func">Generates energy (ATP) through cellular respiration.</td></tr>
+            <tr><td data-label="Structure">Endoplasmic reticulum (ER)</td><td data-label="Function" class="col-func">Synthesizes proteins (rough ER) and lipids (smooth ER).</td></tr>
+            <tr><td data-label="Structure">Lysosomes</td><td data-label="Function" class="col-func">Digest food and break down unwanted materials.</td></tr>
+            <tr><td data-label="Structure">Centrioles</td><td data-label="Function" class="col-func">Help in cell division.</td></tr>
+            <tr><td data-label="Structure">Flagella</td><td data-label="Function" class="col-func">Allows the cell to move.</td></tr>
           </tbody>
         </table>
       </div>
 
       <p class="group-label">Eukaryotic plant cells</p>
-      <div class="table-scroll">
+      <div class="table-scroll reveal">
         <table>
           <thead><tr><th>Structure</th><th>Function</th></tr></thead>
           <tbody>
-            <tr><td>Central vacuole</td><td class="col-func">Stores water, food, and waste while maintaining turgor pressure.</td></tr>
-            <tr><td>Cell wall</td><td class="col-func">Outer covering containing cellulose that provides rigidity.</td></tr>
-            <tr><td>Plastids</td><td class="col-func">Responsible for photosynthesis and pigment storage, for example chloroplasts.</td></tr>
-            <tr><td>Plasmodesmata</td><td class="col-func">Connect adjacent plant cells for transport and communication.</td></tr>
+            <tr><td data-label="Structure">Central vacuole</td><td data-label="Function" class="col-func">Stores water, food, and waste while maintaining turgor pressure.</td></tr>
+            <tr><td data-label="Structure">Cell wall</td><td data-label="Function" class="col-func">Outer covering containing cellulose that provides rigidity.</td></tr>
+            <tr><td data-label="Structure">Plastids</td><td data-label="Function" class="col-func">Responsible for photosynthesis and pigment storage, for example chloroplasts.</td></tr>
+            <tr><td data-label="Structure">Plasmodesmata</td><td data-label="Function" class="col-func">Connect adjacent plant cells for transport and communication.</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- PART 04 — Specialized cells -->
   <section class="part-section" id="specialized">
     <div class="wrap">
-      <div class="part-head">
+      <div class="part-head reveal">
         <div>
           <span class="part-number">Part 04 — Specialized cells</span>
           <h2>Specialized cells and their primary function</h2>
@@ -281,52 +285,51 @@
       </div>
 
       <p class="group-label">Specialized animal cells</p>
-      <div class="table-scroll">
+      <div class="table-scroll reveal">
         <table>
           <thead><tr><th>Cell type</th><th>Primary function</th></tr></thead>
           <tbody>
-            <tr><td>Red blood cells (erythrocytes)</td><td class="col-func">Carry and deliver oxygen throughout the body using hemoglobin.</td></tr>
-            <tr><td>White blood cells (leukocytes)</td><td class="col-func">Protect the body against infections and foreign pathogens.</td></tr>
-            <tr><td>Nerve cells (neurons)</td><td class="col-func">Transmit electrical and chemical signals throughout the body.</td></tr>
-            <tr><td>Muscle cells (myocytes)</td><td class="col-func">Contract to enable movement and exert force.</td></tr>
-            <tr><td>Liver cells (hepatocytes)</td><td class="col-func">Produce and process materials, detoxify chemicals, and synthesize proteins.</td></tr>
-            <tr><td>Microvilli</td><td class="col-func">Increase surface area of intestinal and epithelial cells for nutrient absorption.</td></tr>
+            <tr><td data-label="Cell type">Red blood cells (erythrocytes)</td><td data-label="Function" class="col-func">Carry and deliver oxygen throughout the body using hemoglobin.</td></tr>
+            <tr><td data-label="Cell type">White blood cells (leukocytes)</td><td data-label="Function" class="col-func">Protect the body against infections and foreign pathogens.</td></tr>
+            <tr><td data-label="Cell type">Nerve cells (neurons)</td><td data-label="Function" class="col-func">Transmit electrical and chemical signals throughout the body.</td></tr>
+            <tr><td data-label="Cell type">Muscle cells (myocytes)</td><td data-label="Function" class="col-func">Contract to enable movement and exert force.</td></tr>
+            <tr><td data-label="Cell type">Liver cells (hepatocytes)</td><td data-label="Function" class="col-func">Produce and process materials, detoxify chemicals, and synthesize proteins.</td></tr>
+            <tr><td data-label="Cell type">Microvilli</td><td data-label="Function" class="col-func">Increase surface area of intestinal and epithelial cells for nutrient absorption.</td></tr>
           </tbody>
         </table>
       </div>
 
       <p class="group-label">Specialized stomach cells</p>
-      <div class="table-scroll">
+      <div class="table-scroll reveal">
         <table>
           <thead><tr><th>Cell type</th><th>Function</th></tr></thead>
           <tbody>
-            <tr><td>Chief cells</td><td class="col-func">Digest proteins by secreting pepsinogen using hemoglobin.</td></tr>
-            <tr><td>Parietal cells</td><td class="col-func">Produce hydrochloric acid (HCl) and intrinsic factor for nutrient absorption.</td></tr>
-            <tr><td>Mucous cells</td><td class="col-func">Provide a protective mucus covering against stomach acid.</td></tr>
+            <tr><td data-label="Cell type">Chief cells</td><td data-label="Function" class="col-func">Digest proteins by secreting pepsinogen.</td></tr>
+            <tr><td data-label="Cell type">Parietal cells</td><td data-label="Function" class="col-func">Produce hydrochloric acid (HCl) and intrinsic factor for nutrient absorption.</td></tr>
+            <tr><td data-label="Cell type">Mucous cells</td><td data-label="Function" class="col-func">Provide a protective mucus covering against stomach acid.</td></tr>
           </tbody>
         </table>
       </div>
 
       <p class="group-label">Specialized plant cells</p>
-      <div class="table-scroll">
+      <div class="table-scroll reveal">
         <table>
           <thead><tr><th>Cell type</th><th>Primary function</th></tr></thead>
           <tbody>
-            <tr><td>Parenchyma cells</td><td class="col-func">Perform photosynthesis, store nutrients, and aid in tissue repair.</td></tr>
-            <tr><td>Collenchyma cells</td><td class="col-func">Provide flexible support to stems and leaves.</td></tr>
-            <tr><td>Sclerenchyma cells</td><td class="col-func">Provide rigid structural support and strength.</td></tr>
-            <tr><td>Xylem cells</td><td class="col-func">Transport water and dissolved minerals upward from roots.</td></tr>
-            <tr><td>Phloem cells</td><td class="col-func">Transport sugars and nutrients throughout the plant.</td></tr>
+            <tr><td data-label="Cell type">Parenchyma cells</td><td data-label="Function" class="col-func">Perform photosynthesis, store nutrients, and aid in tissue repair.</td></tr>
+            <tr><td data-label="Cell type">Collenchyma cells</td><td data-label="Function" class="col-func">Provide flexible support to stems and leaves.</td></tr>
+            <tr><td data-label="Cell type">Sclerenchyma cells</td><td data-label="Function" class="col-func">Provide rigid structural support and strength.</td></tr>
+            <tr><td data-label="Cell type">Xylem cells</td><td data-label="Function" class="col-func">Transport water and dissolved minerals upward from roots.</td></tr>
+            <tr><td data-label="Cell type">Phloem cells</td><td data-label="Function" class="col-func">Transport sugars and nutrients throughout the plant.</td></tr>
           </tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- PART 05 — Modifications -->
   <section class="part-section" id="modifications">
     <div class="wrap">
-      <div class="part-head">
+      <div class="part-head reveal">
         <div>
           <span class="part-number">Part 05 — Specialization</span>
           <h2>Cell modifications that enable specialization</h2>
@@ -334,20 +337,18 @@
         <p class="part-prompt">How structure changes to fit function.</p>
       </div>
 
-      <div class="lede-block">
+      <div class="lede-block reveal">
         <p>Cell modifications are the changes in a cell's structure, shape, size, and cellular components that let it perform a specific function efficiently. As cells specialize, they develop unique features suited to their particular roles, which allows different cell types to work together and maintain the normal processes of an organism.</p>
       </div>
 
-      <div class="table-scroll">
+      <div class="table-scroll reveal">
         <table>
-          <thead>
-            <tr><th>Cell type</th><th>Modification</th><th>How it helps the cell function</th></tr>
-          </thead>
+          <thead><tr><th>Cell type</th><th>Modification</th><th>How it helps the cell function</th></tr></thead>
           <tbody>
-            <tr><td>Red blood cells (erythrocytes)</td><td class="col-desc">Lose their nucleus and develop a biconcave shape.</td><td class="col-func">Allows them to carry and transport oxygen more efficiently.</td></tr>
-            <tr><td>Nerve cells (neurons)</td><td class="col-desc">Develop long extensions called axons and dendrites.</td><td class="col-func">Enables the transmission of electrical signals throughout the body.</td></tr>
-            <tr><td>Muscle cells</td><td class="col-desc">Contain numerous mitochondria and specialized contractile proteins.</td><td class="col-func">Provide energy and allow the cells to contract and produce movement.</td></tr>
-            <tr><td>Hair cells</td><td class="col-desc">Develop long, thin extensions that increase surface area.</td><td class="col-func">Enhances the absorption of water and minerals from the soil.</td></tr>
+            <tr><td data-label="Cell type">Red blood cells (erythrocytes)</td><td data-label="Modification" class="col-desc">Lose their nucleus and develop a biconcave shape.</td><td data-label="Effect" class="col-func">Allows them to carry and transport oxygen more efficiently.</td></tr>
+            <tr><td data-label="Cell type">Nerve cells (neurons)</td><td data-label="Modification" class="col-desc">Develop long extensions called axons and dendrites.</td><td data-label="Effect" class="col-func">Enables the transmission of electrical signals throughout the body.</td></tr>
+            <tr><td data-label="Cell type">Muscle cells</td><td data-label="Modification" class="col-desc">Contain numerous mitochondria and specialized contractile proteins.</td><td data-label="Effect" class="col-func">Provide energy and allow the cells to contract and produce movement.</td></tr>
+            <tr><td data-label="Cell type">Root hair cells</td><td data-label="Modification" class="col-desc">Develop long, thin extensions that increase surface area.</td><td data-label="Effect" class="col-func">Enhances the absorption of water and minerals from the soil.</td></tr>
           </tbody>
         </table>
       </div>
@@ -359,14 +360,28 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <p class="footer-brand">General Biology</p>
-      <p class="footer-sub">STEM 12&#8209;Y1&#8209;P3</p>
+      <div>
+        <p class="footer-brand">General Biology</p>
+        <p class="footer-note">The Cell: structure, classification and specialization.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#organelles">Organelles</a>
+        <a href="#comparison">Comparison</a>
+        <a href="#classification">Classification</a>
+        <a href="#specialized">Specialized cells</a>
+        <a href="#modifications">Modifications</a>
+      </nav>
     </div>
     <div class="footer-bottom">
       <span>General Biology &mdash; STEM 12&#8209;Y1&#8209;P3</span>
+      <span class="footer-year" id="footerYear"></span>
     </div>
   </div>
 </footer>
+
+<button id="backToTop" type="button" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
 
 <script src="script.js"></script>
 </body>
